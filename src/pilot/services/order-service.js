@@ -50,11 +50,15 @@ module.exports = class OrderService{
     //     reject(error);
     // });
 
+    var d = new Date();
+    var n = d.valueOf();
+
     order = new Order({
                 user: cust.user,
                 amount: cust.amount,
                 vat: cust.vat,
-                discount: cust.discount
+                discount: cust.discount,
+                orderNo: n
             });
 
     orderObj = await order.save();
@@ -103,6 +107,12 @@ module.exports = class OrderService{
 
     
   }
+
+   generateOrderNo() {
+    var d = new Date();
+    var n = d.valueOf();
+    return n;
+}
 
   
   }

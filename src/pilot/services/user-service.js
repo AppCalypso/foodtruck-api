@@ -5,6 +5,8 @@ module.exports = class UserService{
     constructor() {
       
     }
+
+    
     
     static create(cust) {
 
@@ -61,6 +63,36 @@ module.exports = class UserService{
 
     
   }
+
+  static login(cust) {
+
+    var response = {
+        flag: false,
+        message: 'Error signing up',
+        payload: null
+    };
+
+    let user = null;
+
+  
+
+  return new Promise(async(resolve, reject) => {
+
+
+
+user = await User.findOne({username: cust.username, password: cust.password}).select('username');
+
+if(user == null)
+{
+    return resolve(response);
+}
+
+response.flag = true;
+response.payload = user;
+response.message = "User Logged on successfully";
+     resolve(response);
+  });
+}
 
   
   }

@@ -54,6 +54,22 @@ router.post('/',(req, res, next) => {
 
 });
 
+router.post('/login',(req, res, next) => {
+
+    
+    userService.login(req.body)
+    .then(result => {
+        console.log(result),
+        res.status(200).json(result);
+    })
+    .catch(err => {
+            
+         console.log(err),
+        res.status(500).json(err);
+    });
+
+});
+
 
 
 router.get('/:id', async(req, res, next) => {

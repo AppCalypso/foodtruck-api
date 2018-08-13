@@ -76,6 +76,7 @@ router.patch('/:id',(req, res, next) => {
 
     const id = req.params.id;
     const updateOps = {};
+    
 
     for(const ops of req.body)
     {

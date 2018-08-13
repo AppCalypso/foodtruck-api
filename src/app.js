@@ -3,6 +3,12 @@ const app =  express();
 var bodyParser = require('body-parser');
 // Config body-parser
 app.use(bodyParser.json());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Cache-Control");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
+    next();
+  });
 const mongoose = require('mongoose');
 const config = require('./config');
 
@@ -23,8 +29,8 @@ mongoose.Promise = global.Promise;
 
 
 // // const accountRoutes = require('./api/routes/accounts');
-// // const acctypeRoutes = require('./api/routes/acctypes');
-// // const ledgerRoutes = require('./api/routes/ledgers');
+const paymentRoutes = require('./pilot/routes/payments');
+const userRoutes = require('./pilot/routes/users');
 const productsRoutes = require('./pilot/routes/products');
 const orderRoutes = require('./pilot/routes/orders');
 const categoriesRoutes = require('./pilot/routes/categories');
@@ -56,10 +62,9 @@ const categoriesRoutes = require('./pilot/routes/categories');
     
 // });
 
-// app.use('/accounts',accountRoutes);
-// app.use('/customers',customerRoutes);
-// app.use('/acctypes',acctypeRoutes);
-// app.use('/ledgers',ledgerRoutes);
+
+ app.use('/payments',paymentRoutes);
+ app.use('/users',userRoutes);
  app.use('/categories',categoriesRoutes);
  app.use('/orders',orderRoutes);
  app.use('/products',productsRoutes);

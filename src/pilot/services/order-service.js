@@ -19,36 +19,13 @@ module.exports = class OrderService{
         var orderObj = null;
         var items = [];
         var order = null;
-
+        const updateOps = {};
+        const itms = [];
+        var itt = {};
         
 
       return new Promise(async(resolve, reject) => {
-    //     const merchant = new Merchant({
-    //         name: cust.name,
-    //         address: cust.address,
-    //         location: cust.location,
-    //         state: cust.state,
-    //         email: cust.email,
-    //         phoneno: cust.phoneno,
-    //         image: cust.image
-    //     });
-
-
-    //     merchant
-    // .save()
-    // .then(async(result) => {
-    //     console.log(result);
-    //     response.flag = true;
-    //     response.message = 'Merchant registered successfully';
-    //     response.merchant = result;
-
-        
-    //     resolve(response);
-    // })
-    // .catch(err => {
-    //     console.log(err)
-    //     reject(error);
-    // });
+    
 
     var d = new Date();
     var n = d.valueOf();
@@ -72,9 +49,15 @@ module.exports = class OrderService{
             qty: item.qty
         });
 
-        items.push(await itemObj.save());
+        itt = await itemObj.save();
 
+        items.push(itt);
+        itms.push(itt._id);
     }
+
+    updateOps['items'] = itms;
+
+    await Order.update({_id: orderObj._id},{$set: updateOps});
 
     response.order = {
         items: cust.items,
@@ -107,6 +90,14 @@ module.exports = class OrderService{
 
     
   }
+
+  static async listItems(id) {
+
+    return await Item.find({order: id}).populate('product');
+
+  
+}
+
 
    generateOrderNo() {
     var d = new Date();

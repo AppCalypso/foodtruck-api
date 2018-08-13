@@ -1,34 +1,36 @@
 const express = require('express');
 const router = express.Router();
 
-const Order = require('../model/order');
+const Payment = require('../model/payment');
 
-const orderService = require('../services/order-service');
+const paymentService = require('../services/payment-service');
 
 
 router.get('/',async(req, res, next) => {
     
     try
     {
-        let orders;
+        let payments;
 
-        orders = await orderService.list();
-        res.status(200).json(orders);
+        payments = await paymentService.list();
+        res.status(200).json(payments);
       } 
       catch (err) 
       {
         return res.status(500).send(err);
       }
 });
+
+
 
 router.get('/list',async(req, res, next) => {
     
     try
     {
-        let orders;
+        let payments;
 
-        orders = await orderService.list();
-        res.status(200).json(orders);
+        payments = await paymentService.list();
+        res.status(200).json(payments);
       } 
       catch (err) 
       {
@@ -37,56 +39,22 @@ router.get('/list',async(req, res, next) => {
 });
 
 
-router.get('/items',async(req, res, next) => {
-    
-    var orderID = req.query.orderID;
+router.post('/',async(req, res, next) => {
 
-    try
-    {
-        let orders;
-
-        items = await orderService.listItems(orderID);
-        res.status(200).json(items);
-      } 
-      catch (err) 
-      {
-        return res.status(500).send(err);
-      }
-});
-
-
-router.post('/',(req, res, next) => {
-
-    
-    orderService.create(req.body)
+    paymentService.addPayment(req.body)
     .then(result => {
         console.log(result),
         res.status(200).json(result);
     })
     .catch(err => {
             
-         console.log(err),
+        
         res.status(500).json(err);
     });
 
 });
 
 
-router.post('/checkout',(req, res, next) => {
-
-    
-    orderService.checkout(req.body)
-    .then(result => {
-        console.log(result),
-        res.status(200).json(result);
-    })
-    .catch(err => {
-            
-         console.log(err),
-        res.status(500).json(err);
-    });
-
-});
 
 
 
@@ -96,9 +64,9 @@ router.get('/:id', async(req, res, next) => {
 
     try
     {
-        let order = await orderService.get(id);
+        let payment = await paymentService.get(id);
        
-        res.status(200).json(order);
+        res.status(200).json(payment);
     }
     catch (err) 
       {

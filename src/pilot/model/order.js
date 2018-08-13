@@ -13,6 +13,9 @@ var OrderSchema = new Schema(
         vat : {type: Number, required: true},
         discount : {type: Number, required: true},
         status : {type: String, required: true, default: "Pending"},
+        isReady : {type: String, required: true, default: "N"},
+        isDelivered : {type: String, required: true, default: "N"},
+        isPaid : {type: String, required: true, default: "N"},
         created : {type: Date, default: Date.now}
     }
 );

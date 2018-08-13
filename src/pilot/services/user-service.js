@@ -69,7 +69,7 @@ module.exports = class UserService{
     var response = {
         flag: false,
         message: 'Error Logging In',
-        payload: null
+        payload: {}
     };
 
     let user = null;

@@ -68,7 +68,7 @@ module.exports = class UserService{
 
     var response = {
         flag: false,
-        message: 'Error signing up',
+        message: 'Error Logging In',
         payload: null
     };
 
